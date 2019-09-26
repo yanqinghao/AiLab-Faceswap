@@ -28,7 +28,7 @@ RUN pip install --upgrade pip
 
 RUN add-apt-repository -y ppa:jonathonf/ffmpeg-4 && apt-get update
 
-RUN apt-get install ffmpeg -y
+RUN apt-get install ffmpeg -y && apt-get -y install cmake
 
 COPY --from=builder /build /yanqing
 

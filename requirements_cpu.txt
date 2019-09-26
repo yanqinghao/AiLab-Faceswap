@@ -21,5 +21,4 @@ nvidia-ml-py3
 h5py==2.9.0
 Keras==2.2.4
 # pywin32 ; sys_platform == "win32"
-cmake
 pynvx==0.0.4
