@@ -625,6 +625,8 @@ class GetModel:
         )
         for attempt in range(self.retries):
             try:
+                if os.path.exists(os.path.dirname(self._model_zip_path)):
+                    os.makedirs(os.path.dirname(self._model_zip_path))
                 shutil.copy(self._url_download, self._model_zip_path)
                 # downloaded_size = self._url_partial_size
                 # req = urllib.request.Request(self._url_download)
