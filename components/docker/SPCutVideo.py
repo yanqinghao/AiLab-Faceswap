@@ -1,13 +1,13 @@
 # coding=utf-8
 from __future__ import absolute_import, print_function
 
-from suanpan.app.arguments import Folder, String, File, Int
-from suanpan.log import logger
+from suanpan.app.arguments import Folder, String, Int
 from suanpan.app import app
 from mainscripts import VideoEd
+from utils import get_all_files
 
 
-@app.input(File(key="inputData"))
+@app.input(Folder(key="inputData"))
 @app.param(String(key="fromTime", default="00:00:00.000"))
 @app.param(String(key="toTime", default="00:00:01.000"))
 @app.param(Int(key="audioTrackId", default=0))
@@ -16,11 +16,18 @@ from mainscripts import VideoEd
 def SPCutVideo(context):
     args = context.args
 
+    fileList = get_all_files(args.inputData)
+
     VideoEd.cut_video(
-        args.inputData, args.fromTime, args.toTime, args.audioTrackId, args.bitrate
+        fileList[0],
+        args.outputData,
+        args.fromTime,
+        args.toTime,
+        args.audioTrackId,
+        args.bitrate,
     )
-    
-    return args.inputData
+
+    return args.outputData
 
 
 if __name__ == "__main__":

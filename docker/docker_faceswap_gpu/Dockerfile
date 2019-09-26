@@ -26,13 +26,13 @@ RUN pip config set global.index-url ${PYPI_MIRROR}
 
 RUN pip install --upgrade pip
 
-RUN add-apt-repository ppa:jonathonf/ffmpeg-4 && apt-get update
+RUN add-apt-repository -y ppa:jonathonf/ffmpeg-4 && apt-get update
 
 RUN apt-get install ffmpeg -y
 
 COPY --from=builder /build /yanqing
 
-RUN pip install -r requirements.txt
+RUN pip install -r requirements_gpu.txt
 
 ENTRYPOINT [ "/sbin/my_init", "--" ]
 

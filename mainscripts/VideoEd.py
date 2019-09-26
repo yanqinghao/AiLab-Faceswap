@@ -23,23 +23,14 @@ def extract_video(input_file, output_dir, output_ext=None, fps=None):
             input_file_path = None
 
     if input_file_path is None:
-        io.log_err("input_file not found.")
+        logger.error("input_file not found.")
         return
 
     if fps is None:
-        fps = io.input_int(
-            "Enter FPS ( ?:help skip:fullfps ) : ",
-            0,
-            help_message="How many frames of every second of the video will be extracted.",
-        )
+        fps = 0
 
     if output_ext is None:
-        output_ext = io.input_str(
-            "Output image format? ( jpg png ?:help skip:png ) : ",
-            "png",
-            ["png", "jpg"],
-            help_message="png is lossless, but extraction is x10 slower for HDD, requires x10 more disk space than jpg.",
-        )
+        output_ext = "png"
 
     for filename in Path_utils.get_image_paths(output_path, ["." + output_ext]):
         Path(filename).unlink()
@@ -58,18 +49,24 @@ def extract_video(input_file, output_dir, output_ext=None, fps=None):
     try:
         job = job.run()
     except:
-        io.log_err("ffmpeg fail, job commandline:" + str(job.compile()))
+        logger.error("ffmpeg fail, job commandline:" + str(job.compile()))
 
 
 def cut_video(
-    input_file, from_time=None, to_time=None, audio_track_id=None, bitrate=None
+    input_file,
+    output_folder,
+    from_time=None,
+    to_time=None,
+    audio_track_id=None,
+    bitrate=None,
 ):
     input_file_path = Path(input_file)
+    output_folder_path = Path(output_folder)
     if input_file_path is None:
         logger.error("input_file not found.")
         return
 
-    output_file_path = input_file_path.parent / (
+    output_file_path = output_folder_path / (
         input_file_path.stem + "_cut" + input_file_path.suffix
     )
 
@@ -131,7 +128,7 @@ def video_from_sequence(
     reference_file_path = Path(reference_file) if reference_file is not None else None
 
     if not input_path.exists():
-        io.log_err("input_dir not found.")
+        logger.error("input_dir not found.")
         return
 
     if not output_file_path.parent.exists():
@@ -141,10 +138,10 @@ def video_from_sequence(
     out_ext = output_file_path.suffix
 
     if ext is None:
-        ext = io.input_str("Input image format (extension)? ( default:png ) : ", "png")
+        ext = "png"
 
     if lossless is None:
-        lossless = io.input_bool("Use lossless codec ? ( default:no ) : ", False)
+        lossless = False
 
     video_id = None
     audio_id = None
@@ -159,7 +156,7 @@ def video_from_sequence(
                 reference_file_path = None
 
         if reference_file_path is None:
-            io.log_err("reference_file not found.")
+            logger.error("reference_file not found.")
             return
 
         # probing reference file
@@ -180,12 +177,10 @@ def video_from_sequence(
 
     if fps is None:
         # if fps not specified and not overwritten by reference-file
-        fps = max(1, io.input_int("FPS ? (default:25) : ", 25))
+        fps = 25
 
     if not lossless and bitrate is None:
-        bitrate = max(
-            1, io.input_int("Bitrate of output file in MB/s ? (default:16) : ", 16)
-        )
+        bitrate = 16
 
     input_image_paths = Path_utils.get_image_paths(input_path)
 
@@ -222,5 +217,5 @@ def video_from_sequence(
         job_run.stdin.close()
         job_run.wait()
     except:
-        io.log_err("ffmpeg fail, job commandline:" + str(job.compile()))
+        logger.error("ffmpeg fail, job commandline:" + str(job.compile()))
 
