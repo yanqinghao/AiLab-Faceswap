@@ -123,3 +123,4 @@ Pipfile
 tools/dataupload.py
 whl
 dataset
+zipmodel
