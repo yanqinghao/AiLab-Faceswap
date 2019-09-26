@@ -517,7 +517,9 @@ class GetModel:
         self.model_filename = model_filename
         self.cache_dir = cache_dir
         self.git_model_id = git_model_id
-        self.url_base = os.path.join(os.path.dirname(sys.argv[0]), "zipmodel")
+        self.url_base = os.path.join(
+            os.path.dirname(os.path.abspath(sys.argv[0])), "zipmodel"
+        )
         self.chunk_size = 1024  # Chunk size for downloading and unzipping
         self.retries = 6
         self.get()
