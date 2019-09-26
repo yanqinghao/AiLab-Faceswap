@@ -478,7 +478,7 @@ def safe_shutdown(got_error=False):
 
     queue_manager.terminate_queues()
     logger.debug("Cleanup complete. Shutting down queue manager and exiting")
-    exit(1 if got_error else 0)
+    # exit(1 if got_error else 0)
 
 
 class FaceswapError(Exception):
