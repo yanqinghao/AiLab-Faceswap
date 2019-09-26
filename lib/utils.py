@@ -625,9 +625,10 @@ class GetModel:
         )
         for attempt in range(self.retries):
             try:
-                if os.path.exists(os.path.dirname(self._model_zip_path)):
+                if not os.path.exists(os.path.dirname(self._model_zip_path)):
                     os.makedirs(os.path.dirname(self._model_zip_path))
-                shutil.copy(self._url_download, self._model_zip_path)
+                if not os.path.exists(self._model_zip_path):
+                    shutil.copy(self._url_download, self._model_zip_path)
                 # downloaded_size = self._url_partial_size
                 # req = urllib.request.Request(self._url_download)
                 # if downloaded_size != 0:
@@ -637,12 +638,7 @@ class GetModel:
                 # self.logger.debug("Return Code: %s", response.getcode())
                 # self.write_zipfile(response, downloaded_size)
                 break
-            except (
-                socket_error,
-                socket_timeout,
-                urllib.error.HTTPError,
-                urllib.error.URLError,
-            ) as err:
+            except Exception as err:
                 if attempt + 1 < self.retries:
                     self.logger.warning(
                         "Error downloading model (%s). Retrying %s of %s...",
