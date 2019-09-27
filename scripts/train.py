@@ -252,7 +252,7 @@ class Train():
             logger.info("R|  Press 'S' to save model weights immediately")
         logger.info("R|===================================================")
 
-        keypress = KBHit(is_gui=self.args.redirect_gui)
+        # keypress = KBHit(is_gui=self.args.redirect_gui)
         err = False
         while True:
             try:
@@ -280,21 +280,21 @@ class Train():
                     logger.info("Save requested")
                     self.save_now = True
 
-                # Console Monitor
-                if keypress.kbhit():
-                    console_key = keypress.getch()
-                    if console_key in ("\n", "\r"):
-                        logger.debug("Exit requested")
-                        break
-                    if console_key in ("s", "S"):
-                        logger.info("Save requested")
-                        self.save_now = True
+                # # Console Monitor
+                # if keypress.kbhit():
+                #     console_key = keypress.getch()
+                #     if console_key in ("\n", "\r"):
+                #         logger.debug("Exit requested")
+                #         break
+                #     if console_key in ("s", "S"):
+                #         logger.info("Save requested")
+                #         self.save_now = True
 
                 sleep(1)
             except KeyboardInterrupt:
                 logger.debug("Keyboard Interrupt received")
                 break
-        keypress.set_normal_term()
+        # keypress.set_normal_term()
         logger.debug("Closed Monitor")
         return err
 
