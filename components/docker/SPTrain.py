@@ -51,18 +51,22 @@ def SPTrain(context):
         str(args.__gpu),
     ]
     if args.alignments1:
-        argsTransfer.append(
-            ["--alignments-A", os.path.join(args.alignments1, "alignments.json")]
-        )
+        argsTransfer += [
+            "--alignments-A",
+            os.path.join(args.alignments1, "alignments.json"),
+        ]
+
     if args.alignments2:
-        argsTransfer.append(
-            ["--alignments-A", os.path.join(args.alignments2, "alignments.json")]
-        )
+        argsTransfer += [
+            "--alignments-A",
+            os.path.join(args.alignments2, "alignments.json"),
+        ]
+
     argsNoValue = [
-        ("--allow-growth", str(args.allowGrowth)),
-        ("--warp-to-landmarks", str(args.warpToLandmarks)),
-        ("--no-flip", str(args.noFlip)),
-        ("--no-augment-color", str(args.noAugmentColor)),
+        ("--allow-growth", args.allowGrowth),
+        ("--warp-to-landmarks", args.warpToLandmarks),
+        ("--no-flip", args.noFlip),
+        ("--no-augment-color", args.noAugmentColor),
     ]
     for name, value in argsNoValue:
         if value:
