@@ -37,12 +37,8 @@ def SPTrain(context):
     argsTransfer = [
         "--input-A",
         args.inputData1,
-        "--alignments-A",
-        os.path.join(args.alignments1, "alignments.json"),
         "--input-B",
         args.inputData2,
-        "--alignments-B",
-        os.path.join(args.alignments2, "alignments.json"),
         "--model-dir",
         args.outputModel,
         "--batch-size",
@@ -54,6 +50,14 @@ def SPTrain(context):
         "--gpus",
         str(args.__gpu),
     ]
+    if args.alignments1:
+        argsTransfer.append(
+            ["--alignments-A", os.path.join(args.alignments1, "alignments.json")]
+        )
+    if args.alignments2:
+        argsTransfer.append(
+            ["--alignments-A", os.path.join(args.alignments2, "alignments.json")]
+        )
     argsNoValue = [
         ("--allow-growth", str(args.allowGrowth)),
         ("--warp-to-landmarks", str(args.warpToLandmarks)),

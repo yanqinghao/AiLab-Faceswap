@@ -22,13 +22,7 @@ from lib.cli import FullHelpArgumentParser
         help="(-1.0, 10.0) Defaults: face-cnn 7.2, hist 0.3",
     )
 )
-@app.param(
-    String(
-        key="finalProcess",
-        default="rename",
-        help="folders, rename",
-    )
-)
+@app.param(String(key="finalProcess", default="rename", help="folders, rename"))
 @app.param(String(key="groupBy", default="hist", help="blur, face-cnn, face-yaw, hist"))
 @app.param(Int(key="bins", default=5, help="(1, 100)"))
 @app.output(Folder(key="outputData"))
