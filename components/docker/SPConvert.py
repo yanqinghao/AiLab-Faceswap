@@ -26,13 +26,7 @@ from utils import get_all_files
         help="components dfl_full extended facehull predicted none",
     )
 )
-@app.param(
-    String(
-        key="scaling",
-        default="none",
-        help="sharpen none",
-    )
-)
+@app.param(String(key="scaling", default="none", help="sharpen none"))
 @app.output(Folder(key="outputData"))
 def SPConvert(context):
     args = context.args
@@ -44,26 +38,30 @@ def SPConvert(context):
         PARSER, "convert", "Convert a source image to a new one with the face swapped"
     )
 
-    ARGUMENTS = PARSER.parse_args(
-        [
-            "--input-dir",
-            args.inputData1,
-            "--model-dir",
-            args.inputModel,
-            "--output-dir",
-            args.outputData,
+    argsTransfer = [
+        "--input-dir",
+        args.inputData1,
+        "--model-dir",
+        args.inputModel,
+        "--output-dir",
+        args.outputData,
+        "--color-adjustment",
+        args.colorAdjustment,
+        "--mask-type",
+        args.maskType,
+        "--scaling",
+        args.scaling,
+        "--gpus",
+        str(args.__gpu),
+    ]
+
+    if args.inputData2:
+        argsTransfer += [
             "--alignments",
             os.path.join(args.inputData2, "alignments.json"),
-            "--color-adjustment",
-            args.colorAdjustment,
-            "--mask-type",
-            args.maskType,
-            "--scaling",
-            args.scaling,
-            "--gpus",
-            str(args.__gpu),
         ]
-    )
+
+    ARGUMENTS = PARSER.parse_args(argsTransfer)
     ARGUMENTS.func(ARGUMENTS)
 
     return args.outputData
