@@ -75,7 +75,7 @@ def SPTrain(context):
     ARGUMENTS = PARSER.parse_args(argsTransfer)
     ARGUMENTS.func(ARGUMENTS)
 
-    return args.outputData
+    return args.outputModel
 
 
 if __name__ == "__main__":
