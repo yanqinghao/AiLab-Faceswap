@@ -2,7 +2,7 @@ ffmpeg-python==0.1.17
 tqdm
 tensorflow==1.13.1
 imageio-ffmpeg
-jupyter
+
 psutil
 pathlib
 numpy==1.17.0

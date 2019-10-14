@@ -34,6 +34,8 @@ COPY --from=builder /build /yanqing
 
 RUN pip install -r requirements_cpu.txt
 
+RUN chmod +x entrypoint.sh
+
 ENTRYPOINT [ "/sbin/my_init", "--" ]
 
 CMD [ "bash" ]
