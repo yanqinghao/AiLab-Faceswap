@@ -9,7 +9,6 @@ from mainscripts import Trainer
 @app.input(Folder(key="trainingDataSrcDir"))
 @app.input(Folder(key="trainingDataDstDir"))
 @app.input(Folder(key="pretrainingDataDir"))
-@app.input(Folder(key="modelDir"))
 @app.param(
     String(
         key="modelName",
@@ -19,7 +18,7 @@ from mainscripts import Trainer
 )
 @app.param(Int(key="forceGpuIdx", default=-1))
 @app.param(Bool(key="cpuOnly", default=False))
-@app.output(Folder(key="outputData"))
+@app.output(Folder(key="modelDir"))
 def SPTrainLab(context):
     args = context.args
     training_args = {
@@ -36,7 +35,7 @@ def SPTrainLab(context):
 
     Trainer.main(training_args, device_args)
 
-    return args.inputData
+    return args.modelDir
 
 
 if __name__ == "__main__":
