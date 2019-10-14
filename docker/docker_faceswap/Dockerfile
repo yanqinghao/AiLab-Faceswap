@@ -36,6 +36,6 @@ RUN pip install -r requirements_cpu.txt
 
 RUN chmod +x entrypoint.sh
 
-ENTRYPOINT [ "/sbin/my_init", "--" ]
+ENTRYPOINT [ "/usr/bin/dumb-init", "--" ]
 
-CMD [ "bash" ]
+CMD [ "jupyter", "notebook" ]
