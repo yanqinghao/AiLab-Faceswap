@@ -89,29 +89,30 @@ def cut_video(
         logger.error("ffmpeg fail, job commandline:" + str(job.compile()))
 
 
-def denoise_image_sequence(input_dir, ext=None, factor=None):
+def denoise_image_sequence(input_dir, output_dir, ext=None, factor=None):
     input_path = Path(input_dir)
+    output_path = Path(output_dir)
 
     if not input_path.exists():
-        io.log_err("input_dir not found.")
+        logger.error("input_dir not found.")
         return
 
     if ext is None:
-        ext = io.input_str("Input image format (extension)? ( default:png ) : ", "png")
+        ext = "png"
 
     if factor is None:
-        factor = np.clip(io.input_int("Denoise factor? (1-20 default:5) : ", 5), 1, 20)
+        factor = 5
 
     job = (
         ffmpeg.input(str(input_path / ("%5d." + ext)))
         .filter("hqdn3d", factor, factor, 5, 5)
-        .output(str(input_path / ("%5d." + ext)))
+        .output(str(output_path / ("%5d." + ext)))
     )
 
     try:
         job = job.run()
     except:
-        io.log_err("ffmpeg fail, job commandline:" + str(job.compile()))
+        logger.error("ffmpeg fail, job commandline:" + str(job.compile()))
 
 
 def video_from_sequence(

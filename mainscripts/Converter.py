@@ -595,7 +595,7 @@ def main (args, device_args):
             io.log_err('Model directory not found. Please ensure it exists.')
             return
 
-        is_interactive = io.input_bool ("Use interactive converter? (y/n skip:y) : ", True) if not io.is_colab() else False
+        is_interactive = False
 
         import models
         model = models.import_model( args['model_name'] )(model_path, device_args=device_args)

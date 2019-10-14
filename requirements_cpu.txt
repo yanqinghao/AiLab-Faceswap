@@ -1,12 +1,12 @@
-ffmpeg-python
+ffmpeg-python==0.1.17
 tqdm
-tensorflow==1.14.0
+tensorflow==1.13.1
 imageio-ffmpeg
 
 psutil
 pathlib
-numpy==1.16.2
-opencv-python==4.1.1.26
+numpy==1.17.0
+opencv-python==4.1.0.25
 scikit-image
 Pillow==6.1.0
 scikit-learn
@@ -21,3 +21,4 @@ nvidia-ml-py3
 h5py==2.9.0
 Keras==2.2.4
 # pywin32 ; sys_platform == "win32"
+git+https://www.github.com/keras-team/keras-contrib.git
