@@ -22,11 +22,11 @@ RUN pip install --no-cache-dir jupyter jupyter_contrib_nbextensions jupyter_nbex
  && jupyter nbextension enable code_prettify/code_prettify \
  && jupyter nbextension enable hinterland/hinterland
 
-RUN pip install -r requirements_cpu.txt
-
 WORKDIR /yanqing
 
 COPY . /yanqing
+
+RUN pip install -r requirements_cpu.txt
 
 COPY docker/python/common/notebook/configs /etc/jupyter
 
