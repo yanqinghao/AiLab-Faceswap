@@ -34,7 +34,7 @@ RUN chmod +x entrypoint_convert.sh
 
 RUN chmod +x entrypoint_train.sh
 
-WORKDIR /run
+WORKDIR /workspace
 
 ENTRYPOINT [ "/usr/bin/dumb-init", "--" ]
 
