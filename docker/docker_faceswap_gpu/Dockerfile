@@ -30,7 +30,9 @@ RUN pip install -r requirements_gpu.txt
 
 COPY docker/python/common/notebook/configs /etc/jupyter
 
-RUN chmod +x entrypoint.sh
+RUN chmod +x entrypoint_convert.sh
+
+RUN chmod +x entrypoint_train.sh
 
 WORKDIR /run
 
