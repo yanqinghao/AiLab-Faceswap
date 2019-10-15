@@ -32,6 +32,8 @@ COPY docker/python/common/notebook/configs /etc/jupyter
 
 RUN chmod +x entrypoint.sh
 
+WORKDIR /run
+
 ENTRYPOINT [ "/usr/bin/dumb-init", "--" ]
 
 CMD [ "jupyter", "notebook" ]
