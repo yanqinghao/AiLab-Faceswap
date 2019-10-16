@@ -6,4 +6,4 @@ set -e
 
 # pip install -r requirements.txt
 
-!bash -c "${SP_DISTRIBUTED_CMD} python /yanqing/run.py components.docker.SPTrainLab.SPTrainLab $@"
+bash -c "${SP_DISTRIBUTED_CMD} python /yanqing/run.py components.docker.SPTrainLab.SPTrainLab $@"
