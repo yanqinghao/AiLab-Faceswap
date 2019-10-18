@@ -8,7 +8,7 @@ from suanpan.storage import StorageProxy
 
 
 @app.param(String(key="storageType", default="oss"))
-@app.param(String(key="folder", default="man", help="girl_0  man_0 girl_1 man_1"))
+@app.param(String(key="folder", default="man_1", help="girl_0  man_0 girl_1 man_1"))
 @app.output(Folder(key="outputData"))
 def SPMaterial(context):
     args = context.args
