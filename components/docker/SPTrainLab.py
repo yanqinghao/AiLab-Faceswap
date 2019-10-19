@@ -4,12 +4,14 @@ from __future__ import absolute_import, print_function
 import os
 from suanpan.app.arguments import Folder, String, Bool, Int
 from suanpan.app import app
-
+import shutil
+from utils import get_all_files
 
 
 @app.input(Folder(key="trainingDataSrcDir"))
 @app.input(Folder(key="trainingDataDstDir"))
 @app.input(Folder(key="pretrainingDataDir"))
+@app.input(Folder(key="pretrainedModelDir"))
 @app.param(Bool(key="__edit", default=False))
 @app.param(
     String(
@@ -25,6 +27,9 @@ from suanpan.app import app
 @app.output(Folder(key="modelDir"))
 def SPTrainLab(context):
     args = context.args
+    modelList = get_all_files(args.pretrainedModelDir)
+    for i in modelList:
+        shutil.copy(i, os.path.join(args.modelDir, os.path.split(i)[1]))
     training_args = {
         "training_data_src_dir": args.trainingDataSrcDir,
         "training_data_dst_dir": args.trainingDataDstDir,
@@ -41,6 +46,7 @@ def SPTrainLab(context):
         os.environ["SP_FaceLab_Iterations"] = str(args.iterations)
         os.environ["SP_FaceLab_Batch_Size"] = str(args.batchSize)
     from mainscripts import Trainer
+
     Trainer.main(training_args, device_args)
 
     return args.modelDir
