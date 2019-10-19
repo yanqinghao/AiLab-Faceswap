@@ -1,14 +1,16 @@
 # coding=utf-8
 from __future__ import absolute_import, print_function
 
+import os
 from suanpan.app.arguments import Folder, String, Bool, Int
 from suanpan.app import app
-from mainscripts import Trainer
+
 
 
 @app.input(Folder(key="trainingDataSrcDir"))
 @app.input(Folder(key="trainingDataDstDir"))
 @app.input(Folder(key="pretrainingDataDir"))
+@app.param(Bool(key="__edit", default=False))
 @app.param(
     String(
         key="modelName",
@@ -16,6 +18,8 @@ from mainscripts import Trainer
         help="AVATAR, DF, H64, H128, LIAEF128, SAE, DEV_FANSEG",
     )
 )
+@app.param(Int(key="iterations", default=1000))
+@app.param(Int(key="batchSize", default=4))
 @app.param(Int(key="forceGpuIdx", default=-1))
 @app.param(Bool(key="cpuOnly", default=False))
 @app.output(Folder(key="modelDir"))
@@ -32,7 +36,11 @@ def SPTrainLab(context):
         "execute_programs": [],
     }
     device_args = {"cpu_only": args.cpuOnly, "force_gpu_idx": args.forceGpuIdx}
-
+    if not args.__edit:
+        os.environ["SP_FaceLab_Edit"] = "False"
+        os.environ["SP_FaceLab_Iterations"] = str(args.iterations)
+        os.environ["SP_FaceLab_Batch_Size"] = str(args.batchSize)
+    from mainscripts import Trainer
     Trainer.main(training_args, device_args)
 
     return args.modelDir
