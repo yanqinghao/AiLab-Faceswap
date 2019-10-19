@@ -178,9 +178,14 @@ class ModelBase(object):
                     ),
                 )
             else:
+                try:
+                    iterations = int(os.getenv("SP_FaceLab_Iterations"))
+                except:
+                    iterations = 0
                 self.options["target_iter"] = max(
                     model_data.get("target_iter", 0),
                     self.options.get("target_epoch", 0),
+                    iterations,
                 )
                 if "target_epoch" in self.options:
                     self.options.pop("target_epoch")
@@ -204,7 +209,11 @@ class ModelBase(object):
                 ),
             )
         else:
-            self.batch_size = self.options.get("batch_size", 0)
+            try:
+                default_batch_size = int(os.getenv("SP_FaceLab_Batch_Size"))
+            except:
+                default_batch_size = self.options.get("batch_size", 0)
+            self.batch_size = default_batch_size
 
         if ask_sort_by_yaw:
             if self.iter == 0 or ask_override:
