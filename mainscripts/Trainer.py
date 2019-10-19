@@ -1,5 +1,3 @@
-import sys
-import argparse
 import traceback
 import queue
 import threading
@@ -174,6 +172,7 @@ def trainerThread(s2c, c2s, e, args, device_args):
                             model_save()
                             is_reached_goal = True
                             io.log_info("You can use preview now.")
+                            break
 
                 if (
                     not is_reached_goal
@@ -380,3 +379,7 @@ def main(args, device_args):
                 s2c.put({"op": "close"})
 
         io.destroy_all_windows()
+
+    # s2c.join()
+    # c2s.join()
+
