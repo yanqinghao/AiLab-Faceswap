@@ -555,7 +555,7 @@ class ModelBase(object):
         ]
         bckp_filename_list += [str(summary_path), str(self.model_data_path)]
 
-        storage.upload(str(self.model_path).replace("/sp_data/", ""), self.model_path)
+        storage.upload(str(self.model_path).replace("/sp_data/", ""), str(self.model_path))
 
         if self.autobackup:
             current_hour = time.localtime().tm_hour
