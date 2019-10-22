@@ -9,7 +9,7 @@ from pathlib import Path
 
 import cv2
 import numpy as np
-
+from suanpan.storage import storage
 import imagelib
 from interact import interact as io
 from nnlib import nnlib
@@ -554,6 +554,8 @@ class ModelBase(object):
             for _, filename in self.get_model_filename_list()
         ]
         bckp_filename_list += [str(summary_path), str(self.model_data_path)]
+
+        storage.upload(self.model_path.replace("/sp_data/", ""), self.model_path)
 
         if self.autobackup:
             current_hour = time.localtime().tm_hour
