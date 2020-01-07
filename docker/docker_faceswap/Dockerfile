@@ -1,6 +1,8 @@
 ARG PYTHON_VERSION=3.7
 
-FROM registry-vpc.cn-shanghai.aliyuncs.com/shuzhi/docker_base:${PYTHON_VERSION}
+ARG NAME_SPACE
+
+FROM registry-vpc.cn-shanghai.aliyuncs.com/${NAME_SPACE}/docker_base:${PYTHON_VERSION}
 
 ENV PYPI_MIRROR "https://mirrors.aliyun.com/pypi/simple"
 
