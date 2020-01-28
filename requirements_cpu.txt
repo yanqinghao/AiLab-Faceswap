@@ -1,6 +1,6 @@
 ffmpeg-python==0.1.17
 tqdm
-tensorflow==1.13.1
+tensorflow==1.15.2
 imageio-ffmpeg
 
 psutil
